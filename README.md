@@ -21,14 +21,14 @@ mvn install -Dmaven.test.skip=true
  Get your ```x-api-key``` Following step 1, 2 and 3 the start guide ***https://developer.circulodecredito.com.mx/guia-de-inicio*** 
 
 #### Step 2. Change url and request data
-In the ```Fis2022ApiTest.java``` file, found at ```com/cdc/apihub/mx/fis2022/client/api/```. The request and URL data for API consumption must be modified in ```private String url ="the_url";```, as shown in the following code snippet with the corresponding data:
+In the ```Fis2022ApiTest.java``` file, found at ```/src/test/com/cdc/apihub/mx/fis2022/client/api/```. The request data for API consumption must be modified as shown in the following code snippet with the corresponding data:
 
 
 ``` java
 
 public class EmploymentVerificationApiTest {
     ...
-    private String url = "the_url"; //CHANGE IT TO VALID URL
+    private String url = "https://circulodecredito-dev.apigee.net/sandbox/v1/fis2022 ";
     private String xApiKey = "your_apikey"; //CHANGE IT TO YOUR API KEY
     ...
     ...
@@ -59,8 +59,17 @@ public class EmploymentVerificationApiTest {
     }
     ...
 ```
+### Step 3. Set request data
 
-### Step 3. Run the unit test
+This product accepts two types of formats. You can send a request with general information about the person you are interested in or you can configure folios if you prefer.
+
+You must configure the request information (requestDatosGenerales or requestFolios) in the second parameter of the "devuelveelScoreFIS" method as shown in the following line of code:
+
+``` java
+ResponseScore response = api.devuelveelScoreFIS( xApiKey, requestDatosGenerales, contentType);
+```
+
+### Step 4. Run the unit test
 
 Having the previous steps, all that remains is to run the unit test, with the following command:
 ```shell
