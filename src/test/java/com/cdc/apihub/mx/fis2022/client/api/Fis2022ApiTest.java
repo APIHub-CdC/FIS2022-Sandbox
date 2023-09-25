@@ -11,7 +11,6 @@ import org.junit.Ignore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Ignore
 public class Fis2022ApiTest {
 
     private Logger logger = LoggerFactory.getLogger(Fis2022ApiTest.class.getName());
