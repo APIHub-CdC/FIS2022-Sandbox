@@ -1,42 +1,38 @@
-# FIS Financial Inclusion Score
+package com.cdc.apihub.mx.fis2022.client.api;
 
-FIS Financial Inclusion Score, developed by Cículo de Crédito, allows you to evaluate people without credit history. Its purpose is to promote financial inclusion by qualifying 100% of this population.
+import com.cdc.apihub.mx.fis2022.client.ApiClient;
+import com.cdc.apihub.mx.fis2022.client.model.RequestDatosGenerales;
+import com.cdc.apihub.mx.fis2022.client.model.RequestFolios;
+import com.cdc.apihub.mx.fis2022.client.model.ResponseScore;
+import okhttp3.OkHttpClient;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.Ignore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-## Requirements
+@Ignore
+public class Fis2022ApiTest {
 
-Building the API client library requires:
-1. Java 1.7+
-2. Maven/Gradle
+    private Logger logger = LoggerFactory.getLogger(Fis2022ApiTest.class.getName());
+    private final Fis2022Api api = new Fis2022Api();
 
-## Installation
-
-To install the dependencies, the following command must be executed:
-```shell
-mvn install -Dmaven.test.skip=true
-```
-
-## Getting started
-
-#### Step 1. Get your ```x-api-key```
- Get your ```x-api-key``` Following step 1, 2 and 3 the start guide ***https://developer.circulodecredito.com.mx/guia-de-inicio*** 
-
-#### Step 2. Change url and request data
-In the ```Fis2022ApiTest.java``` file, found at ```com/cdc/apihub/mx/fis2022/client/api/```. The request and URL data for API consumption must be modified in ```private String url ="the_url";```, as shown in the following code snippet with the corresponding data:
-
-
-``` java
-
-public class EmploymentVerificationApiTest {
-    ...
+    private ApiClient apiClient = null;
     private String url = "the_url"; //CHANGE IT TO VALID URL
     private String xApiKey = "your_apikey"; //CHANGE IT TO YOUR API KEY
-    ...
-    ...
+
+    @Before()
+    public void Setup() {
+        this.apiClient = api.getApiClient();
+        this.apiClient.setBasePath(url);
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder().build();
+        apiClient.setHttpClient(okHttpClient);
+    }
+
     @Test
     public void devuelveelScoreFISTest() throws Exception {
-        ...
+
         RequestDatosGenerales requestDatosGenerales = new RequestDatosGenerales();
-        Request body = new Request();
         RequestFolios requestFolios = new RequestFolios();
 
         requestDatosGenerales.setPrimerNombre("NULL"); //CHANGE TO VALID DATA
@@ -55,17 +51,11 @@ public class EmploymentVerificationApiTest {
 
         requestFolios.setFolioConsulta("NULL"); //CHANGE TO VALID DATA
         requestFolios.setFolioOtorgante("NULL"); //CHANGE TO VALID DATA
-        ...
+
+        String contentType = "application/json";
+        ResponseScore response = api.devuelveelScoreFIS( xApiKey, requestDatosGenerales, contentType);
+
+        logger.info(response.toString());
     }
-    ...
-```
-
-### Step 3. Run the unit test
-
-Having the previous steps, all that remains is to run the unit test, with the following command:
-```shell
-mvn test -Dmaven.install.skip=true
-```
-
----
-[TERMS AND CONDITIONS](https://github.com/APIHub-CdC/licencias-cdc)
+    
+}
